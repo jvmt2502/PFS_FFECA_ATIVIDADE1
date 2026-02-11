@@ -1,0 +1,127 @@
+<div class="home-container">
+  <!-- Banner Carousel -->
+  <section class="banner-section">
+    <ngb-carousel [interval]="5000" [showNavigationArrows]="true" [showNavigationIndicators]="true">
+      <ng-template ngbSlide *ngFor="let banner of banners">
+        <div class="banner-slide" [style.background-image]="'url(' + banner.image + ')'">
+          <div class="banner-overlay"></div>
+          <div class="banner-content">
+            <h1 class="display-4 fw-bold text-white mb-3 fade-in">{{ banner.title }}</h1>
+            <p class="lead text-white mb-4 fade-in">{{ banner.subtitle }}</p>
+            <button mat-raised-button color="accent" class="fade-in" (click)="navigateToProducts()">
+              Comprar Agora
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-3">Categorias</h2>
+        <p class="text-muted">Navegue por nossas principais categorias</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" *ngFor="let category of categories">
+          <mat-card class="category-card text-center h-100" [style.border-top]="'4px solid ' + category.color">
+            <mat-card-content class="p-4">
+              <mat-icon class="category-icon mb-3" [style.color]="category.color">
+                {{ category.icon }}
+              </mat-icon>
+              <h4 class="mb-0">{{ category.name }}</h4>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-section py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-3">Produtos em Destaque</h2>
+        <p class="text-muted">Confira nossos produtos mais populares</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" *ngFor="let product of featuredProducts">
+          <mat-card class="product-card h-100">
+            <img mat-card-image [src]="product.image" [alt]="product.name">
+            
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <p class="text-muted small mb-2">{{ product.description }}</p>
+              
+              <div class="d-flex align-items-center mb-2">
+                <mat-icon class="text-warning me-1" style="font-size: 18px;">star</mat-icon>
+                <span class="small">{{ product.rating }}</span>
+              </div>
+
+              <mat-chip-set>
+                <mat-chip [style.background-color]="product.inStock ? '#22c55e' : '#ef4444'">
+                  {{ product.inStock ? 'Em estoque' : 'Esgotado' }}
+                </mat-chip>
+              </mat-chip-set>
+            </mat-card-content>
+
+            <mat-card-actions class="p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 text-primary">{{ product.price | currency:'BRL' }}</h4>
+                <button mat-mini-fab color="primary" 
+                        [disabled]="!product.inStock"
+                        (click)="addToCart(product)"
+                        matTooltip="Adicionar ao carrinho">
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <button mat-raised-button color="primary" (click)="navigateToProducts()">
+          Ver Todos os Produtos
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">local_shipping</mat-icon>
+          <h5>Frete Grátis</h5>
+          <p class="text-muted small">Acima de R$ 299</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">payment</mat-icon>
+          <h5>Pagamento Seguro</h5>
+          <p class="text-muted small">Várias formas de pagamento</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">support_agent</mat-icon>
+          <h5>Suporte 24/7</h5>
+          <p class="text-muted small">Atendimento sempre disponível</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">verified</mat-icon>
+          <h5>Garantia Oficial</h5>
+          <p class="text-muted small">Produtos originais</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,38 @@
+.header-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-menu {
+  gap: 0.5rem;
+}
+
+.nav-menu button {
+  font-weight: 500;
+}
+
+.header-actions {
+  margin-left: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo span {
+    font-size: 1rem;
+  }
+}
