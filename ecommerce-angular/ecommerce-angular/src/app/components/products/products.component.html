@@ -1,0 +1,123 @@
+<div class="products-container">
+  <div class="container py-5">
+    
+    <!-- Page Header -->
+    <div class="page-header text-center mb-5">
+      <h1 class="fw-bold mb-3">Catálogo Completo de Produtos</h1>
+      <p class="text-muted mb-2">
+        Encontre os melhores eletrônicos e componentes de tecnologia com preços competitivos
+      </p>
+      <div class="header-badges mt-3">
+        <mat-chip class="me-2">
+          <mat-icon class="me-1">local_shipping</mat-icon>
+          Frete Grátis acima de R$ 299
+        </mat-chip>
+        <mat-chip class="me-2">
+          <mat-icon class="me-1">credit_card</mat-icon>
+          Parcele em até 12x
+        </mat-chip>
+        <mat-chip>
+          <mat-icon class="me-1">verified</mat-icon>
+          Produtos Originais
+        </mat-chip>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <mat-card class="filters-card">
+          <div class="row align-items-center">
+            
+            <!-- Category Filter -->
+            <div class="col-lg-8 mb-3 mb-lg-0">
+              <h6 class="mb-2">Categorias:</h6>
+              <mat-chip-set>
+                <mat-chip 
+                  *ngFor="let category of categories"
+                  [selected]="selectedCategory === category"
+                  (click)="filterByCategory(category)"
+                  [class.selected-chip]="selectedCategory === category">
+                  {{ category }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <!-- Sort Filter -->
+            <div class="col-lg-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Ordenar por</mat-label>
+                <mat-select [(ngModel)]="sortBy" (selectionChange)="onSortChange()">
+                  <mat-option value="name">Nome (A-Z)</mat-option>
+                  <mat-option value="price-asc">Menor Preço</mat-option>
+                  <mat-option value="price-desc">Maior Preço</mat-option>
+                  <mat-option value="rating">Melhor Avaliação</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let product of filteredProducts">
+        <mat-card class="product-card h-100">
+          <div class="product-image-container">
+            <img mat-card-image [src]="product.image" [alt]="product.name">
+            <div class="product-overlay">
+              <button mat-fab color="primary" 
+                      [disabled]="!product.inStock"
+                      (click)="addToCart(product)"
+                      matTooltip="Adicionar ao carrinho">
+                <mat-icon>add_shopping_cart</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <mat-card-header>
+            <mat-card-title class="product-title">{{ product.name }}</mat-card-title>
+            <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p class="text-muted small mb-2">{{ product.description }}</p>
+            
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <div class="rating">
+                <mat-icon class="text-warning">star</mat-icon>
+                <span class="ms-1">{{ product.rating }}</span>
+              </div>
+              
+              <mat-chip [class.in-stock]="product.inStock" [class.out-of-stock]="!product.inStock">
+                {{ product.inStock ? 'Em estoque' : 'Esgotado' }}
+              </mat-chip>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions class="product-actions">
+            <div class="w-100">
+              <h4 class="price mb-3">{{ product.price | currency:'BRL' }}</h4>
+              <button mat-raised-button color="primary" 
+                      class="w-100"
+                      [disabled]="!product.inStock"
+                      (click)="addToCart(product)">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Adicionar ao Carrinho
+              </button>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredProducts.length === 0" class="text-center py-5">
+      <mat-icon class="empty-icon">inventory_2</mat-icon>
+      <h4 class="mt-3">Nenhum produto encontrado</h4>
+      <p class="text-muted">Tente selecionar outra categoria</p>
+    </div>
+
+  </div>
+</div>

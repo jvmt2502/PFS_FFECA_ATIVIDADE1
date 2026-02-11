@@ -1,0 +1,206 @@
+<div class="home-container">
+  <!-- Banner Carousel -->
+  <section class="banner-section">
+    <ngb-carousel [interval]="5000" [showNavigationArrows]="true" [showNavigationIndicators]="true">
+      <ng-template ngbSlide *ngFor="let banner of banners">
+        <div class="banner-slide" [style.background-image]="'url(' + banner.image + ')'">
+          <div class="banner-overlay"></div>
+          <div class="banner-content">
+            <h1 class="display-4 fw-bold text-white mb-3 fade-in">{{ banner.title }}</h1>
+            <p class="lead text-white mb-4 fade-in">{{ banner.subtitle }}</p>
+            <button mat-raised-button color="accent" class="fade-in" (click)="navigateToProducts()">
+              Comprar Agora
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-3">Categorias</h2>
+        <p class="text-muted">Navegue por nossas principais categorias de eletrônicos</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let category of categories">
+          <mat-card class="category-card text-center h-100" [style.border-top]="'4px solid ' + category.color">
+            <mat-card-content class="p-4">
+              <mat-icon class="category-icon mb-3" [style.color]="category.color">
+                {{ category.icon }}
+              </mat-icon>
+              <h4 class="mb-0">{{ category.name }}</h4>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offers Section -->
+  <section class="offers-section py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-3">Ofertas Especiais</h2>
+        <p class="text-muted">Aproveite as melhores promoções da semana</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <mat-card class="offer-card h-100 text-center">
+            <mat-icon class="offer-icon text-primary">laptop</mat-icon>
+            <mat-card-content>
+              <h3 class="fw-bold mb-2">Notebooks</h3>
+              <p class="display-6 text-primary fw-bold mb-2">30% OFF</p>
+              <p class="text-muted">Em notebooks selecionados Dell, Lenovo e Acer</p>
+              <button mat-raised-button color="primary" (click)="navigateToProducts()">
+                Ver Ofertas
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-md-4">
+          <mat-card class="offer-card h-100 text-center">
+            <mat-icon class="offer-icon text-success">memory</mat-icon>
+            <mat-card-content>
+              <h3 class="fw-bold mb-2">Componentes</h3>
+              <p class="display-6 text-success fw-bold mb-2">25% OFF</p>
+              <p class="text-muted">Placas de vídeo, processadores e memórias RAM</p>
+              <button mat-raised-button color="primary" (click)="navigateToProducts()">
+                Ver Ofertas
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="col-md-4">
+          <mat-card class="offer-card h-100 text-center">
+            <mat-icon class="offer-icon text-warning">headset</mat-icon>
+            <mat-card-content>
+              <h3 class="fw-bold mb-2">Periféricos</h3>
+              <p class="display-6 text-warning fw-bold mb-2">20% OFF</p>
+              <p class="text-muted">Mouses, teclados e headsets gamers</p>
+              <button mat-raised-button color="primary" (click)="navigateToProducts()">
+                Ver Ofertas
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-section py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold mb-3">Produtos em Destaque</h2>
+        <p class="text-muted">Os produtos mais vendidos da semana</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6" *ngFor="let product of featuredProducts">
+          <mat-card class="product-card h-100">
+            <img mat-card-image [src]="product.image" [alt]="product.name">
+            
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+              <p class="text-muted small mb-2">{{ product.description }}</p>
+              
+              <div class="d-flex align-items-center mb-2">
+                <mat-icon class="text-warning me-1" style="font-size: 18px;">star</mat-icon>
+                <span class="small">{{ product.rating }}</span>
+              </div>
+
+              <mat-chip-set>
+                <mat-chip [style.background-color]="product.inStock ? '#22c55e' : '#ef4444'">
+                  {{ product.inStock ? 'Em estoque' : 'Esgotado' }}
+                </mat-chip>
+              </mat-chip-set>
+            </mat-card-content>
+
+            <mat-card-actions class="p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 text-primary">{{ product.price | currency:'BRL' }}</h4>
+                <button mat-mini-fab color="primary" 
+                        [disabled]="!product.inStock"
+                        (click)="addToCart(product)"
+                        matTooltip="Adicionar ao carrinho">
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="text-center mt-5">
+        <button mat-raised-button color="primary" (click)="navigateToProducts()">
+          Ver Todos os Produtos
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section py-5 bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">local_shipping</mat-icon>
+          <h5>Frete Grátis</h5>
+          <p class="text-muted small">Para compras acima de R$ 299 em todo Brasil</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">credit_card</mat-icon>
+          <h5>Parcele em até 12x</h5>
+          <p class="text-muted small">Sem juros no cartão de crédito</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">support_agent</mat-icon>
+          <h5>Atendimento Especializado</h5>
+          <p class="text-muted small">Segunda a sábado das 8h às 20h</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <mat-icon class="feature-icon mb-3">verified_user</mat-icon>
+          <h5>Compra 100% Segura</h5>
+          <p class="text-muted small">Site protegido e pagamento seguro</p>
+        </div>
+      </div>
+
+      <!-- Additional Info -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <mat-card class="info-card">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h4 class="fw-bold mb-2">
+                  <mat-icon class="align-middle me-2">campaign</mat-icon>
+                  Cadastre-se e ganhe 10% de desconto na primeira compra!
+                </h4>
+                <p class="text-muted mb-0">
+                  Crie sua conta agora e receba ofertas exclusivas diretamente no seu e-mail.
+                </p>
+              </div>
+              <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <button mat-raised-button color="accent" (click)="navigateTo('/login')">
+                  <mat-icon>person_add</mat-icon>
+                  Criar Conta Grátis
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
